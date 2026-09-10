@@ -1,16 +1,60 @@
-# React + Vite
+# Task Manager
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A clean and responsive task manager built with React and Vite.
 
-Currently, two official plugins are available:
+## Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+[View the live app](https://to-do-list-shin.netlify.app/)
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Add new tasks
+- Edit existing tasks
+- Mark tasks as completed
+- Delete tasks
+- Search tasks instantly
+- Persist tasks with `localStorage`
+- Responsive layout for desktop and mobile
+- Keyboard-friendly task editing with Enter and Escape
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React
+- Vite
+- JavaScript (ES6+)
+- CSS3
+- Browser `localStorage`
+
+## Getting Started
+
+```bash
+git clone https://github.com/shhrzdfrzd-ui/To-Do-list-React-.git
+cd task-manager-react
+npm install
+npm run dev
+```
+
+Then open the local development URL shown in the terminal.
+
+## Project Structure
+
+```text
+src/
+├── components/
+│   ├── SearchBar.jsx
+│   ├── TaskForm.jsx
+│   ├── TaskItem.jsx
+│   └── TaskList.jsx
+├── App.css
+├── App.jsx
+├── index.css
+└── main.jsx
+```
+
+## What I Practiced
+
+This project was built to practice React fundamentals, including component-based architecture, state management with hooks, controlled inputs, list rendering, event handling, and browser persistence with `localStorage`.
+
+## License
+
+This project is for learning and portfolio purposes.

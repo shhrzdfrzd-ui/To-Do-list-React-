@@ -1,74 +1,77 @@
+import { useEffect, useState } from 'react'
 import './App.css'
-import { useState, useEffect } from 'react'
-import TaskItem from './components/TaskItem'
 import TaskForm from './components/TaskForm'
 import SearchBar from './components/SearchBar'
+import TaskList from './components/TaskList'
 
 function App() {
   const [tasks, setTasks] = useState(() => {
-  const savedTasks = localStorage.getItem("tasks")
-  return savedTasks ? JSON.parse(savedTasks) : []
+    try {
+      const savedTasks = localStorage.getItem('tasks')
+      return savedTasks ? JSON.parse(savedTasks) : []
+    } catch {
+      return []
+    }
   })
-  const [searchText, setSearchText] = useState("")
+  const [searchText, setSearchText] = useState('')
 
   useEffect(() => {
-  localStorage.setItem("tasks", JSON.stringify(tasks))
+    localStorage.setItem('tasks', JSON.stringify(tasks))
   }, [tasks])
 
-  function deleteTask(taskToDelete) {
-    setTasks(tasks.filter((task) => task !== taskToDelete))
-  }
-
-  function toggleTask(taskToToggle) {
-    setTasks(
-      tasks.map((task) =>
-        task === taskToToggle
-          ? { ...task, completed: !task.completed }
-          : task
-      )
-    )
-  }
-
   function addTask(text) {
-  const newTask = { 
-    text: text, 
-    completed: false, 
-    updatedAt: new Date().toLocaleString() 
-  }
-  setTasks([...tasks, newTask])
+    const newTask = {
+      id: crypto.randomUUID(),
+      text: text.trim(),
+      completed: false,
+      updatedAt: new Date().toLocaleString(),
+    }
+    setTasks((currentTasks) => [...currentTasks, newTask])
   }
 
-  function editTask(taskToEdit, newText) {
-  setTasks(
-    tasks.map((task) =>
-      task === taskToEdit 
-        ? { ...task, text: newText, updatedAt: new Date().toLocaleString() } 
-        : task
+  function deleteTask(taskId) {
+    setTasks((currentTasks) => currentTasks.filter((task) => task.id !== taskId))
+  }
+
+  function toggleTask(taskId) {
+    setTasks((currentTasks) =>
+      currentTasks.map((task) =>
+        task.id === taskId ? { ...task, completed: !task.completed } : task,
+      ),
     )
-  )
+  }
+
+  function editTask(taskId, newText) {
+    setTasks((currentTasks) =>
+      currentTasks.map((task) =>
+        task.id === taskId
+          ? { ...task, text: newText, updatedAt: new Date().toLocaleString() }
+          : task,
+      ),
+    )
   }
 
   const filteredTasks = tasks.filter((task) =>
-    task.text.toLowerCase().includes(searchText.toLowerCase())
+    task.text.toLowerCase().includes(searchText.toLowerCase()),
   )
 
   return (
-  <div className="app-container">
-    <h1>My To-Do List</h1>
-    <SearchBar searchText={searchText} onSearchChange={setSearchText} />
-    <TaskForm onAddTask={addTask} />
-    <ul>
-      {filteredTasks.map((task, index) => (
-        <TaskItem
-          key={index}
-          task={task}
-          onDelete={deleteTask}
-          onToggle={toggleTask}
-          onEdit={editTask}
-        />
-      ))}
-    </ul>
-  </div>
+    <main className="app-container">
+      <header className="app-header">
+        <p className="eyebrow">TASK MANAGER</p>
+        <h1>My To-Do List</h1>
+        <p className="subtitle">Keep your tasks simple and organized.</p>
+      </header>
+
+      <SearchBar searchText={searchText} onSearchChange={setSearchText} />
+      <TaskForm onAddTask={addTask} />
+      <TaskList
+        tasks={filteredTasks}
+        onDelete={deleteTask}
+        onToggle={toggleTask}
+        onEdit={editTask}
+      />
+    </main>
   )
 }
 

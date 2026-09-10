@@ -1,31 +1,34 @@
 import { useState } from 'react'
 
 function TaskForm({ onAddTask }) {
-  const [text, setText] = useState("")
+  const [text, setText] = useState('')
 
   function handleAdd() {
-    if (text.trim() === "") {
-      return
-    }
-    onAddTask(text)
-    setText("")
+    const trimmedText = text.trim()
+    if (!trimmedText) return
+
+    onAddTask(trimmedText)
+    setText('')
   }
 
   return (
-    <div className="task-form">
+    <form
+      className="task-form"
+      onSubmit={(e) => {
+        e.preventDefault()
+        handleAdd()
+      }}
+    >
+      <label className="sr-only" htmlFor="new-task">New task</label>
       <input
+        id="new-task"
         type="text"
-        placeholder="Enter a task.."
+        placeholder="Add a new task..."
         value={text}
         onChange={(e) => setText(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            handleAdd()
-          }
-        }}
       />
-      <button onClick={handleAdd}>Add</button>
-    </div>
+      <button type="submit">Add</button>
+    </form>
   )
 }
 

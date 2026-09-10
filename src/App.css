@@ -1,29 +1,63 @@
 .app-container {
-  background-color: #151515;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0px 10px 40px -5px rgba(0, 0, 0, 0.4);
+  width: 100%;
+  padding: 32px;
+  background: #151515;
+  border: 1px solid #242424;
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+}
+
+.app-header {
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: #8e8a83;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
 }
 
 h1 {
-  text-align: center;
+  margin: 0;
   color: #f1eee8;
-  margin-bottom: 20px;
+  font-size: clamp(28px, 6vw, 38px);
 }
 
-input[type="text"] {
+.subtitle {
+  margin: 8px 0 0;
+  color: #77736d;
+  font-size: 14px;
+}
+
+.search-wrapper {
+  display: block;
+}
+
+input[type='text'],
+input[type='search'] {
   width: 100%;
-  padding: 12px;
-  margin-bottom: 10px;
-  background-color: #0d0d0d;
-  color: #f1eee8;
+  min-width: 0;
+  padding: 12px 14px;
+  margin: 0 0 10px;
   border: 1px solid #383838;
-  border-radius: 8px;
+  border-radius: 9px;
   outline: none;
+  background: #0d0d0d;
+  color: #f1eee8;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-input[type="text"]:focus {
+input[type='text']:focus,
+input[type='search']:focus {
   border-color: #777570;
+  box-shadow: 0 0 0 3px rgba(241, 238, 232, 0.06);
+}
+
+input::placeholder {
+  color: #66625d;
 }
 
 .task-form {
@@ -37,67 +71,158 @@ input[type="text"]:focus {
 }
 
 button {
-  padding: 10px 16px;
-  background-color: #f1eee8;
-  color: #0d0d0d;
-  border: none;
+  border: 0;
   border-radius: 8px;
-  cursor: pointer;
-  transition: 0.3s ease;
+  padding: 10px 16px;
+  background: #f1eee8;
+  color: #0d0d0d;
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 
 button:hover {
-  background-color: #d8d5ce;
-  transform: translateY(-2px);
+  background: #d8d5ce;
+  transform: translateY(-1px);
 }
 
-ul {
+button:focus-visible {
+  outline: 2px solid #f1eee8;
+  outline-offset: 2px;
+}
+
+.task-list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-li {
-  border: 1px solid #292929;
-  background-color: #111111;
-  border-radius: 8px;
-  margin-bottom: 10px;
+.task-item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 12px;
-  transition: 0.3s ease;
-  cursor: pointer;
+  gap: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #292929;
+  border-radius: 9px;
+  background: #111111;
+  transition: border-color 0.2s ease;
 }
 
-li:hover {
+.task-item:hover {
   border-color: #555;
 }
 
-li span {
+.task-content {
+  display: flex;
   flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 2px;
+  border: 0;
+  background: transparent;
   color: #d8d5ce;
   text-align: left;
 }
 
-li.completed span {
+.task-content:hover {
+  background: transparent;
+  transform: none;
+}
+
+.task-text {
+  overflow-wrap: anywhere;
+}
+
+.task-content small {
+  margin-top: 4px;
+  color: #66625d;
+  font-size: 10px;
+  font-weight: 400;
+}
+
+.completed .task-text {
   text-decoration: line-through;
   opacity: 0.4;
 }
 
-li button {
-  padding: 5px 10px;
+.completed .task-content small {
+  opacity: 0.4;
+}
+
+.task-actions {
+  display: flex;
+  flex-shrink: 0;
+  gap: 5px;
+}
+
+.task-actions button {
+  padding: 6px 10px;
   border: 1px solid #383838;
-  border-radius: 5px;
-  margin-left: 5px;
-  background-color: #1b1b1b;
+  background: #1b1b1b;
   color: #b8b5af;
   font-size: 12px;
 }
 
-li button:hover {
-  background-color: #f1eee8;
+.task-actions button:hover {
+  background: #f1eee8;
   color: #0d0d0d;
   border-color: #f1eee8;
   transform: none;
+}
+
+.editing {
+  align-items: stretch;
+}
+
+.edit-input {
+  flex: 1;
+  margin: 0 !important;
+}
+
+.empty-state {
+  margin: 28px 0 8px;
+  color: #66625d;
+  font-size: 14px;
+  text-align: center;
+}
+
+@media (max-width: 520px) {
+  body {
+    padding: 20px 12px;
+  }
+
+  .app-container {
+    padding: 22px 16px;
+    border-radius: 13px;
+  }
+
+  .task-item {
+    align-items: flex-start;
+  }
+
+  .task-actions {
+    flex-direction: column;
+  }
+
+  .task-actions button {
+    min-width: 62px;
+  }
+}
+
+@media (max-width: 380px) {
+  .task-form {
+    flex-direction: column;
+  }
+
+  .task-form button {
+    width: 100%;
+  }
+
+  .task-item.editing {
+    flex-direction: column;
+  }
+
+  .editing .task-actions {
+    flex-direction: row;
+  }
 }
